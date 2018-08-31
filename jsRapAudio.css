@@ -1,0 +1,10 @@
+.rapAudio{
+background-color:black;
+}
+.rapAudio audio{
+width:100%;
+}
+
+.rapAudio canvas{
+width:100%;
+}
