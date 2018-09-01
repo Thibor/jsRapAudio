@@ -58,12 +58,13 @@ return this.each(function() {
 		analyser.connect(ctx.destination);
 		var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 		var cwidth = canvas.width;
-		var capHeight = this.opt.capHeight;
 		var cheight = canvas.height;
+		var capHeight = this.opt.capHeight;
 		var meterGap = this.opt.meterGap;
 		var capSpeed = this.opt.capSpeed;
 		var capStyle = this.opt.capColor;
 		var meterNum = this.opt.meterCount;
+		var capMax = cheight - capHeight;
 		var capYPositionArray = new Array(meterNum);
 		var meterWidth = Math.floor(cwidth / meterNum) - meterGap;
 		if(meterWidth < 1)meterWidth = 1;
@@ -87,6 +88,8 @@ return this.each(function() {
 					capYPositionArray[i] += capSpeed;	
 				else
 					capYPositionArray[i] = y;
+				if(capYPositionArray[i] > capMax)
+					capYPositionArray[i] = capMax;
 				ctx.fillStyle = capStyle;
 				ctx.fillRect(x,capYPositionArray[i],meterWidth,capHeight);
 				ctx.fillStyle = gradient;
