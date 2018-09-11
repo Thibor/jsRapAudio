@@ -1,10 +1,36 @@
 .rapAudio{
+height:300px;
 background-color:black;
+position:relative;
 }
 .rapAudio audio{
+position:absolute;	
 width:100%;
+bottom:0px;
 }
 
 .rapAudio canvas{
+position:absolute;
+top:0px;
+left:0px;
+height:100%;
 width:100%;
+}
+
+.rapAudio div{
+color:white;
+position:relative;
+}
+
+.rapAudio .divCaption{
+color:#080;
+text-shadow:0 0 10px #4f4,0 0 4px #fff;
+font-size:20vmin;
+padding-top:4%;
+text-align: center;	
+display:none;
+}
+
+.rapAudio .divCaption:after{
+content:'♫';
 }

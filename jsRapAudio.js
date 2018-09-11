@@ -19,9 +19,12 @@ return this.each(function() {
 		onLoadedmetadata:null,
 		onVolumechange:null
 	},options);
-	var base = this;
+	let base = this;
+	let AF = 0;
 	$(this).addClass('rapAudio');
-	this.canvas = $('<canvas>').appendTo(this)[0];
+	this.divCanvas = $('<div>').appendTo(this);
+	this.divCaption = $('<div>').addClass('divCaption').appendTo(this.divCanvas);
+	this.canvas = $('<canvas>').appendTo(this.divCanvas)[0];
 	this.audio = $('<audio>').appendTo(this)[0];
 	if(this.opt.src)
 		$(this.audio).attr('src',this.opt.src);
@@ -45,62 +48,69 @@ return this.each(function() {
 			base.opt.onVolumechange.call(base);
 	}
 	
-	this.Init = function(){
-		var h = $(this).height() - $(this.audio).height();
-		$(this.canvas).height(h);
-		var canvas = this.canvas;
-		canvas.width = $(this.canvas).width();
-		canvas.height = $(this.canvas).height();
-		var ctx = new AudioContext();
-		var analyser = ctx.createAnalyser();
-		var audioSrc = ctx.createMediaElementSource(this.audio);
-		audioSrc.connect(analyser);
-		analyser.connect(ctx.destination);
-		var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-		var cwidth = canvas.width;
-		var cheight = canvas.height;
-		var capHeight = this.opt.capHeight;
-		var meterGap = this.opt.meterGap;
-		var capSpeed = this.opt.capSpeed;
-		var capStyle = this.opt.capColor;
-		var meterNum = this.opt.meterCount;
-		var capMax = cheight - capHeight;
-		var capYPositionArray = new Array(meterNum);
-		var meterWidth = Math.floor(cwidth / meterNum) - meterGap;
-		if(meterWidth < 1)meterWidth = 1;
-		var meterSpace = meterWidth + meterGap;
-		var meterStart = (cwidth - meterSpace * meterNum) >> 1;
-		var array = new Uint8Array(analyser.frequencyBinCount);
-		var step = Math.floor((array.length * this.opt.frequency)/ meterNum); 
-		if(meterStart < 0)meterStart = 0;
-		ctx = canvas.getContext('2d');
-		gradient = ctx.createLinearGradient(0,0,0,cheight);
-		gradient.addColorStop(1,'#040');
-		gradient.addColorStop(0.5,'#880');
-		gradient.addColorStop(0,'#f00');
-		function renderFrame(){
-			analyser.getByteFrequencyData(array);
-			ctx.clearRect(0,0,cwidth,cheight);
-			for (var i = 0;i < meterNum; i++){
-				var x = meterStart + i * meterSpace;
-				var y = cheight - (cheight * array[i * step]) / 0xff;
-				if(y > capYPositionArray[i])
-					capYPositionArray[i] += capSpeed;	
+	let cwidth = $(this).width();
+	let cheight = $(this).height() - $(this.audio).height();
+	$(this.divCanvas).bind({
+			click : function(e){
+				$(base.canvas).toggle();
+				$(base.divCaption).toggle();
+				if($(base.canvas).is(':visible'))
+					AF = requestAnimationFrame(renderFrame);
 				else
-					capYPositionArray[i] = y;
-				if(capYPositionArray[i] > capMax)
-					capYPositionArray[i] = capMax;
-				ctx.fillStyle = capStyle;
-				ctx.fillRect(x,capYPositionArray[i],meterWidth,capHeight);
-				ctx.fillStyle = gradient;
-				ctx.fillRect(x,y + capHeight,meterWidth,cheight);
+					cancelAnimationFrame(AF);
 			}
-			requestAnimationFrame(renderFrame);
+	}).height(cheight);	
+	
+	var canvas = this.canvas;
+	var AC = new AudioContext();
+	var analyser = AC.createAnalyser();
+	var audioSrc = AC.createMediaElementSource(this.audio);
+	var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+	var capHeight = this.opt.capHeight;
+	var meterGap = this.opt.meterGap;
+	var capSpeed = this.opt.capSpeed;
+	var capStyle = this.opt.capColor;
+	var meterNum = this.opt.meterCount;
+	var capMax = cheight - capHeight;
+	var capYPositionArray = new Array(meterNum);
+	var meterWidth = Math.floor(cwidth / meterNum) - meterGap;
+	if(meterWidth < 1)meterWidth = 1;
+	var meterSpace = meterWidth + meterGap;
+	var meterStart = (cwidth - meterSpace * meterNum) >> 1;
+	if(meterStart < 0)meterStart = 0;
+	var array = new Uint8Array(analyser.frequencyBinCount);
+	var step = Math.floor((array.length * this.opt.frequency)/ meterNum); 
+	canvas.width = cwidth;
+	canvas.height = cheight;
+	audioSrc.connect(analyser);
+	analyser.connect(AC.destination);
+	let ctx = canvas.getContext('2d');
+	gradient = ctx.createLinearGradient(0,0,0,cheight);
+	gradient.addColorStop(1,'#040');
+	gradient.addColorStop(0.5,'#880');
+	gradient.addColorStop(0,'#f00');
+		
+	function renderFrame(){
+		analyser.getByteFrequencyData(array);
+		ctx.clearRect(0,0,cwidth,cheight);
+		for (var i = 0;i < meterNum; i++){
+			var x = meterStart + i * meterSpace;
+			var y = cheight - (cheight * array[i * step]) / 0xff;
+			if(y > capYPositionArray[i])
+				capYPositionArray[i] += capSpeed;	
+			else
+				capYPositionArray[i] = y;
+			if(capYPositionArray[i] > capMax)
+				capYPositionArray[i] = capMax;
+			ctx.fillStyle = capStyle;
+			ctx.fillRect(x,capYPositionArray[i],meterWidth,capHeight);
+			ctx.fillStyle = gradient;
+			ctx.fillRect(x,y + capHeight,meterWidth,cheight);
 		}
-		renderFrame();
-	};
-
-	this.Init();
+		AF = requestAnimationFrame(renderFrame);
+	}
+		
+	AF = requestAnimationFrame(renderFrame);
 	if(this.opt.autoplay)
 		this.audio.play();
 })
