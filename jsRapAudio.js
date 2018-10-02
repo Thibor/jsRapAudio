@@ -25,11 +25,15 @@ return this.each(function() {
 	this.divCanvas = $('<div>').appendTo(this);
 	this.divCaption = $('<div>').addClass('divCaption').appendTo(this.divCanvas);
 	this.canvas = $('<canvas>').appendTo(this.divCanvas)[0];
-	this.audio = $('<audio>').appendTo(this)[0];
-	if(this.opt.src)
-		$(this.audio).attr('src',this.opt.src);
+	this.audio = $('<audio>').attr('src',this.opt.src).appendTo(this)[0];
+	this.divControls = $('<div>').addClass('divControls').appendTo(this);
+	this.divPP = $('<div>').addClass('divPP').html('&#9658;').appendTo(this.divControls);
+	this.divCurTime = $('<div>').addClass('divCurTime').appendTo(this.divControls);
+	this.divProOut = $('<div>').addClass('divProOut').appendTo(this.divControls);
+	this.divProIn = $('<div>').addClass('divProIn').appendTo(this.divProOut);
+	this.divTotTime = $('<div>').addClass('divTotTime').appendTo(this.divControls);
 	if(this.opt.controls)
-		$(this.audio).attr('controls','');
+		$(this.divControls).show();
 	if(this.opt.loop)
 		$(this.audio).attr('loop','');
 	
@@ -39,8 +43,23 @@ return this.each(function() {
 	}
 	
 	this.audio.onloadedmetadata = function(){
+		$(base.divCurTime).text(SecToTim(0));
+		$(base.divTotTime).text(SecToTim(base.audio.duration));
 		if(base.opt.onLoadedmetadata)
 			base.opt.onLoadedmetadata.call(base);
+	}
+	
+	this.audio.onpause = function(){
+		base.divPP.html('&#9658;');
+	}
+	
+	this.audio.onplay = function(){
+		base.divPP.html('&#10074;&#10074;');
+	}
+	
+	this.audio.ontimeupdate = function(){
+		$(base.divCurTime).text(SecToTim(base.audio.currentTime));
+		$(base.divProIn).width((base.audio.currentTime / base.audio.duration ) * 100 + '%');
 	}
 	
 	this.audio.onvolumechange = function(){
@@ -48,8 +67,26 @@ return this.each(function() {
 			base.opt.onVolumechange.call(base);
 	}
 	
+	$(this.divPP).bind({
+		click : function(e){
+			if(base.audio.paused)
+				base.audio.play();
+			else
+				base.audio.pause();
+		}
+	});
+	
+	$(this.divProOut).bind({
+		click : function(e){
+			let p = (e.clientX - $(base.divProOut)[0].getBoundingClientRect().left) / $(base.divProOut).width();
+			base.audio.currentTime = base.audio.duration * p;
+		}
+	});
+	
 	let cwidth = $(this).width();
-	let cheight = $(this).height() - $(this.audio).height();
+	let cheight = $(this).height();
+	if(this.opt.controls)
+		cheight -= 32;
 	$(this.divCanvas).bind({
 			click : function(e){
 				$(base.canvas).toggle();
@@ -109,6 +146,13 @@ return this.each(function() {
 		}
 		AF = requestAnimationFrame(renderFrame);
 	}
+	
+	function SecToTim(secs){
+		var hoursDiv = secs / 3600, hours = Math.floor( hoursDiv ), minutesDiv = secs % 3600 / 60, minutes = Math.floor( minutesDiv ), seconds = Math.ceil( secs % 3600 % 60 );
+		if( seconds > 59 ) { seconds = 0; minutes = Math.ceil( minutesDiv ); }
+		if( minutes > 59 ) { minutes = 0; hours = Math.ceil( hoursDiv ); }
+		return ( hours == 0 ? '' : hours > 0 && hours.toString().length < 2 ? '0'+hours+':' : hours+':' ) + ( minutes.toString().length < 2 ? '0'+minutes : minutes ) + ':' + ( seconds.toString().length < 2 ? '0' + seconds : seconds );
+	};
 		
 	AF = requestAnimationFrame(renderFrame);
 	if(this.opt.autoplay)

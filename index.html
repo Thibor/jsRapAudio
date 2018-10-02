@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <title>Demo</title>
 <link rel="stylesheet" href="jsRapAudio.css" />
+<link rel="stylesheet" href="audioplayer.css" />
 <link rel="stylesheet" href="index.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="jsRapAudio.js"></script>
+<script src="audioplayer.js"></script>
 <script>
 $(document).ready(function(){
 var player1 = $('#demo1').jsRapAudio({
@@ -17,7 +19,7 @@ var player1 = $('#demo1').jsRapAudio({
 		console.log('onEnded');
 	},
 	onLoadedmetadata:function(){
-		console.log(this.audio.duration);
+		console.log('onLoadedmetadata ' + this.audio.duration);
 	},
 	onVolumechange:function(){
 		console.log(this.audio.volume);
