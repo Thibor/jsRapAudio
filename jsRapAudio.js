@@ -66,9 +66,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 
 			$(this.divPP).bind({
 				click: function (e) {
-					if (base.audio.paused)
+					if (base.audio.paused) {
+						audioContext.resume();
 						base.audio.play();
-					else
+					}else
 						base.audio.pause();
 				}
 			});
@@ -105,10 +106,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 				}
 			}).height(cheight);
 
-			var canvas = this.canvas;
-			var AC = new AudioContext();
-			var analyser = AC.createAnalyser();
-			var audioSrc = AC.createMediaElementSource(this.audio);
+			let canvas = this.canvas;
+			let audioContext = new AudioContext();
+			var analyser = audioContext.createAnalyser();
+			var audioSrc = audioContext.createMediaElementSource(this.audio);
 			var capHeight = this.opt.capHeight;
 			var meterGap = this.opt.meterGap;
 			var capSpeed = this.opt.capSpeed;
@@ -126,7 +127,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 			canvas.width = cwidth;
 			canvas.height = cheight;
 			audioSrc.connect(analyser);
-			analyser.connect(AC.destination);
+			analyser.connect(audioContext.destination);
 			let ctx = canvas.getContext('2d');
 			gradient = ctx.createLinearGradient(0, 0, 0, cheight);
 			gradient.addColorStop(1, '#040');
