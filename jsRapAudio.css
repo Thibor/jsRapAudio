@@ -1,94 +1,114 @@
-.rapAudio{
-height:300px;
-background-color:black;
-position:relative;
-color:white;
-}
-.rapAudio audio{
-position:absolute;	
-width:100%;
-bottom:0px;
+.rapAudio {
+	height: 300px;
+	background-color: black;
+	position: relative;
+	color: white;
+	user-select: none;
 }
 
-.rapAudio canvas{
-position:absolute;
-top:0px;
-left:0px;
-height:100%;
-width:100%;
-}
+	.rapAudio audio {
+		position: absolute;
+		width: 100%;
+		bottom: 0px;
+	}
 
-.rapAudio div{
-color:white;
-position:relative;
-}
+	.rapAudio canvas {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+	}
 
-.rapAudio .divCaption{
-color:#080;
-text-shadow:0 0 10px #4f4,0 0 4px #fff;
-font-size:20vmin;
-padding-top:4%;
-text-align: center;	
-display:none;
-}
+	.rapAudio div {
+		color: white;
+		position: relative;
+	}
 
-.rapAudio .divCaption:after{
-content:'♫';
-}
+	.rapAudio .divCaption {
+		color: #080;
+		text-shadow: 0 0 10px #4f4,0 0 4px #fff;
+		font-size: 20vmin;
+		padding-top: 4%;
+		text-align: center;
+		display: none;
+	}
 
-.rapAudio .divControls{
-padding:4px;
-position:absolute;
-bottom:0px;
-width:100%;
-height:32px;
-left:0xp;
-right:0px;
-box-sizing:border-box;
-display:none;
-cursor:default;
-}
+		.rapAudio .divCaption:after {
+			content: '♫';
+		}
 
-.rapAudio .divPP{
-margin-top:6px;
-top:0px;
-bottom:0px;
-left:0xp;
-width:32px;
-text-align:center;
-position:absolute;	
-cursor:pointer;
-}
+	.rapAudio .divControls {
+		padding: 4px;
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		height: 32px;
+		left: 0xp;
+		right: 0px;
+		box-sizing: border-box;
+		display: none;
+		cursor: default;
+	}
 
-.rapAudio .divCurTime{
-margin-top:4px;	
-left:32px;
-width:64px;	
-position:absolute;	
-text-align:center;
-}
+	.rapAudio .divPP {
+		margin-top: 6px;
+		top: 0px;
+		bottom: 0px;
+		left: 0xp;
+		width: 32px;
+		text-align: center;
+		position: absolute;
+		cursor: pointer;
+	}
 
-.rapAudio .divTotTime{
-margin-top:4px;
-right:0px;
-width:64px;	
-position:absolute;	
-text-align:center;
-}
+	.rapAudio .divTotTime {
+		margin-top: 4px;
+		right: 0px;
+		width: 64px;
+		position: absolute;
+		text-align: center;
+	}
 
-.rapAudio .divProOut{	
-left:96px;
-right:64px;
-bottom:10px;
-top:10px;
-background-color:grey;
-position:absolute;	
-cursor:pointer;
-}
+	.rapAudio .divVolumeOut {
+		left: 32px;
+		bottom: 10px;
+		top: 10px;
+		width: 100px;
+		background-color: grey;
+		position: absolute;
+		cursor: pointer;
+	}
 
-.rapAudio .divProIn{
-height:100%;
-background-color:blue;
-position:absolute;	
-background-image:linear-gradient(#9dd3f7,#095586);
-}
+	.rapAudio .divVolumeIn {
+		height: 100%;
+		width: 100px;
+		background-color: blue;
+		position: absolute;
+		background-image: linear-gradient(#9dd3f7,#095586);
+	}
+
+	.rapAudio .divCurTime {
+		margin-top: 4px;
+		left: 132px;
+		width: 64px;
+		position: absolute;
+		text-align: center;
+	}
+
+	.rapAudio .divProOut {
+		left: 196px;
+		right: 64px;
+		bottom: 10px;
+		top: 10px;
+		background-color: grey;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.rapAudio .divProIn {
+		height: 100%;
+		background-color: blue;
+		position: absolute;
+		background-image: linear-gradient(#9dd3f7,#095586);
+	}
