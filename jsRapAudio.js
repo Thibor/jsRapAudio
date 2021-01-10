@@ -69,7 +69,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					if (base.audio.paused) {
 						audioContext.resume();
 						base.audio.play();
-					}else
+					} else
 						base.audio.pause();
 				}
 			});
@@ -100,7 +100,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					$(base.canvas).toggle();
 					$(base.divCaption).toggle();
 					if ($(base.canvas).is(':visible'))
-						AF = requestAnimationFrame(renderFrame);
+						AF = requestAnimationFrame(RenderFrame);
 					else
 						cancelAnimationFrame(AF);
 				}
@@ -108,22 +108,22 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 
 			let canvas = this.canvas;
 			let audioContext = new AudioContext();
-			var analyser = audioContext.createAnalyser();
-			var audioSrc = audioContext.createMediaElementSource(this.audio);
-			var capHeight = this.opt.capHeight;
-			var meterGap = this.opt.meterGap;
-			var capSpeed = this.opt.capSpeed;
-			var capStyle = this.opt.capColor;
-			var meterNum = this.opt.meterCount;
-			var capMax = cheight - capHeight;
-			var capYPositionArray = new Array(meterNum);
-			var meterWidth = Math.floor(cwidth / meterNum) - meterGap;
+			let analyser = audioContext.createAnalyser();
+			let audioSrc = audioContext.createMediaElementSource(this.audio);
+			let capHeight = this.opt.capHeight;
+			let meterGap = this.opt.meterGap;
+			let capSpeed = this.opt.capSpeed;
+			let capStyle = this.opt.capColor;
+			let meterNum = this.opt.meterCount;
+			let capMax = cheight - capHeight;
+			let capYPositionArray = new Array(meterNum);
+			let meterWidth = Math.floor(cwidth / meterNum) - meterGap;
 			if (meterWidth < 1) meterWidth = 1;
-			var meterSpace = meterWidth + meterGap;
-			var meterStart = (cwidth - meterSpace * meterNum) >> 1;
+			let meterSpace = meterWidth + meterGap;
+			let meterStart = (cwidth - meterSpace * meterNum) >> 1;
 			if (meterStart < 0) meterStart = 0;
-			var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-			var step = Math.floor((frequencyData.length * this.opt.frequency) / meterNum);
+			let frequencyData = new Uint8Array(analyser.frequencyBinCount);
+			let step = Math.floor((frequencyData.length * this.opt.frequency) / meterNum);
 			canvas.width = cwidth;
 			canvas.height = cheight;
 			audioSrc.connect(analyser);
@@ -134,7 +134,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 			gradient.addColorStop(0.5, '#880');
 			gradient.addColorStop(0, '#f00');
 
-			function renderFrame() {
+			function RenderFrame() {
 				analyser.getByteFrequencyData(frequencyData);
 				ctx.clearRect(0, 0, cwidth, cheight);
 				for (var i = 0; i < meterNum; i++) {
@@ -151,7 +151,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					ctx.fillStyle = gradient;
 					ctx.fillRect(x, y + capHeight, meterWidth, cheight);
 				}
-				AF = requestAnimationFrame(renderFrame);
+				AF = requestAnimationFrame(RenderFrame);
 			}
 
 			function SecToTim(secs) {
@@ -177,7 +177,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					this.opt.onVolumechange.call(this, p);
 			}
 
-			AF = requestAnimationFrame(renderFrame);
+			AF = requestAnimationFrame(RenderFrame);
 			if (this.opt.autoplay)
 				this.audio.play();
 		})

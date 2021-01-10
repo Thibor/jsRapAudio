@@ -1,36 +1,36 @@
 ﻿<!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Demo</title>
-<link rel="stylesheet" href="jsRapAudio.css" />
-<link rel="stylesheet" href="index.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="jsRapAudio.js"></script>
-<script>
-$(document).ready(function(){
-$('#demo1').jsRapAudio({
-	src:'sample.ogg',
-	loop:true,
-	onEnded:function(){
-		console.log('onEnded');
-	},
-	onLoadedmetadata:function(){
-		console.log('onLoadedmetadata ' + this.audio.duration);
-	},
-	onVolumechange:function(){
-		console.log(this.audio.volume);
-	}
-});
-});
-</script>
+	<meta charset="UTF-8">
+	<title>Demo</title>
+	<link rel="stylesheet" href="jsRapAudio.css" />
+	<link rel="stylesheet" href="index.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="jsRapAudio.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#demo1').jsRapAudio({
+				src: 'sample.ogg',
+				loop: true,
+				onEnded: function () {
+					console.log('onEnded');
+				},
+				onLoadedmetadata: function () {
+					console.log('onLoadedmetadata ' + this.audio.duration);
+				},
+				onVolumechange: function () {
+					console.log(this.audio.volume);
+				}
+			});
+		});
+	</script>
 </head>
 <body>
-<div id="divMain">
-<div id="divGitHub">
-<div id="GitHub" onclick="location.href='https://github.com/Thibor/jsRapAudio'"></div>
-</div>
-<div id="demo1" ></div>
-</div>
+	<div id="divMain">
+		<div id="divGitHub">
+			<div id="GitHub" onclick="location.href='https://github.com/Thibor/jsRapAudio'"></div>
+		</div>
+		<div id="demo1"></div>
+	</div>
 </body>
 </html>
