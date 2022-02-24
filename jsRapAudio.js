@@ -21,6 +21,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 			}, options);
 			let base = this;
 			let AF = 0;
+			this.volume = 0;
 			$(this).empty().addClass('rapAudio');
 			this.divCanvas = $('<div>').appendTo(this);
 			this.divCaption = $('<div>').addClass('divCaption').appendTo(this.divCanvas);
@@ -91,10 +92,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 				}
 			});
 
-			let cwidth = $(this).width();
-			let cheight = $(this).height();
+			let baseWidth = $(this).width();
+			let baseHeight = $(this).height();
 			if (this.opt.controls)
-				cheight -= 32;
+				baseHeight -= 32;
 			$(this.divCanvas).bind({
 				click: function (e) {
 					$(base.canvas).toggle();
@@ -104,42 +105,45 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					else
 						cancelAnimationFrame(AF);
 				}
-			}).height(cheight);
+			}).height(baseHeight);
 
 			let canvas = this.canvas;
 			let audioContext = new AudioContext();
-			let analyser = audioContext.createAnalyser();
-			let audioSrc = audioContext.createMediaElementSource(this.audio);
-			let capHeight = this.opt.capHeight;
-			let meterGap = this.opt.meterGap;
-			let capSpeed = this.opt.capSpeed;
-			let capStyle = this.opt.capColor;
-			let meterNum = this.opt.meterCount;
-			let capMax = cheight - capHeight;
-			let capYPositionArray = new Array(meterNum);
-			let meterWidth = Math.floor(cwidth / meterNum) - meterGap;
+			var analyser = audioContext.createAnalyser();
+			var audioSrc = audioContext.createMediaElementSource(this.audio);
+			var capHeight = this.opt.capHeight;
+			var meterGap = this.opt.meterGap;
+			var capSpeed = this.opt.capSpeed;
+			var capStyle = this.opt.capColor;
+			var meterNum = this.opt.meterCount;
+			var capMax = baseHeight - capHeight;
+			var capYPositionArray = new Array(meterNum);
+			var meterWidth = Math.floor(baseWidth / meterNum) - meterGap;
 			if (meterWidth < 1) meterWidth = 1;
-			let meterSpace = meterWidth + meterGap;
-			let meterStart = (cwidth - meterSpace * meterNum) >> 1;
+			var meterSpace = meterWidth + meterGap;
+			var meterStart = (baseWidth - meterSpace * meterNum) >> 1;
 			if (meterStart < 0) meterStart = 0;
-			let frequencyData = new Uint8Array(analyser.frequencyBinCount);
-			let step = Math.floor((frequencyData.length * this.opt.frequency) / meterNum);
-			canvas.width = cwidth;
-			canvas.height = cheight;
+			var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+			var step = Math.floor((frequencyData.length * this.opt.frequency) / meterNum);
+			canvas.width = baseWidth;
+			canvas.height = baseHeight;
 			audioSrc.connect(analyser);
 			analyser.connect(audioContext.destination);
 			let ctx = canvas.getContext('2d');
-			gradient = ctx.createLinearGradient(0, 0, 0, cheight);
+			gradient = ctx.createLinearGradient(0, 0, 0, baseHeight);
 			gradient.addColorStop(1, '#040');
 			gradient.addColorStop(0.5, '#880');
 			gradient.addColorStop(0, '#f00');
 
 			function RenderFrame() {
+				let volume = 0;
 				analyser.getByteFrequencyData(frequencyData);
-				ctx.clearRect(0, 0, cwidth, cheight);
-				for (let i = 0; i < meterNum; i++) {
+				ctx.clearRect(0, 0, baseWidth, baseHeight);
+				for (var i = 0; i < meterNum; i++) {
+					let f = frequencyData[i * step];
 					let x = meterStart + i * meterSpace;
-					let y = cheight - (cheight * frequencyData[i * step]) / 0xff;
+					let y = baseHeight - (baseHeight * f) / 0xff;
+					volume += f;
 					if (y > capYPositionArray[i])
 						capYPositionArray[i] += capSpeed;
 					else
@@ -149,13 +153,14 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 					ctx.fillStyle = capStyle;
 					ctx.fillRect(x, capYPositionArray[i], meterWidth, capHeight);
 					ctx.fillStyle = gradient;
-					ctx.fillRect(x, y + capHeight, meterWidth, cheight);
+					ctx.fillRect(x, y + capHeight, meterWidth, baseHeight);
 				}
+				base.volume = (volume * 1.0) / meterNum;
 				AF = requestAnimationFrame(RenderFrame);
 			}
 
 			function SecToTim(secs) {
-				let hoursDiv = secs / 3600, hours = Math.floor(hoursDiv), minutesDiv = secs % 3600 / 60, minutes = Math.floor(minutesDiv), seconds = Math.ceil(secs % 3600 % 60);
+				var hoursDiv = secs / 3600, hours = Math.floor(hoursDiv), minutesDiv = secs % 3600 / 60, minutes = Math.floor(minutesDiv), seconds = Math.ceil(secs % 3600 % 60);
 				if (seconds > 59) { seconds = 0; minutes = Math.ceil(minutesDiv); }
 				if (minutes > 59) { minutes = 0; hours = Math.ceil(hoursDiv); }
 				return (hours == 0 ? '' : hours > 0 && hours.toString().length < 2 ? '0' + hours + ':' : hours + ':') + (minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds);
