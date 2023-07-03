@@ -1,19 +1,21 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "webpage", ".", "{609C52A8-869B-457E-BF34-35D961725ACA}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "jsRapAudio", "..\Thibor\jsRapAudio\", "{609C52A8-869B-457E-BF34-35D961725ACA}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/webpage"
-		Debug.AspNetCompiler.PhysicalPath = "..\webpage\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\webpage\"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_43072"
+		Debug.AspNetCompiler.PhysicalPath = "..\jsRapAudio\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_43072\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/webpage"
-		Release.AspNetCompiler.PhysicalPath = "..\webpage\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\webpage\"
+		Release.AspNetCompiler.VirtualPath = "/localhost_43072"
+		Release.AspNetCompiler.PhysicalPath = "..\jsRapAudio\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_43072\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
@@ -31,5 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CA44E3B-90D8-4831-9C8C-44AC22A2CD46}
 	EndGlobalSection
 EndGlobal

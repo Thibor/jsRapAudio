@@ -13,6 +13,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 				meterCount: 40,
 				meterGap: 2,
 				frequency: 0.7,
+				volume:0.5,
 				capColor: '#fff',
 				src: '',
 				onEnded: null,
@@ -183,6 +184,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 			}
 
 			AF = requestAnimationFrame(RenderFrame);
+			this.SetVolume(this.opt.volume);
 			if (this.opt.autoplay)
 				this.audio.play();
 		})
