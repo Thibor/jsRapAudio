@@ -23,7 +23,7 @@ Option | Type | Default | Description
 ------ | ---- | ------- | -----------
 autoplay | bool | false | Play after start
 loop | bool | fale | Play in loop
-volume | integer | 1.0 | Audio volume (range 0.0 .. 1.0)
+volume | float | 1.0 | Audio volume (range 0.0 .. 1.0)
 
 ### Events
 
