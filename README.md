@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/github/downloads/Thibor/jsRapAudio/total?color=critical&style=for-the-badge">
     <img src="https://img.shields.io/github/license/Thibor/jsRapAudio?color=blue&style=for-the-badge">
     <img src="https://img.shields.io/github/v/release/Thibor/jsRapAudio?color=blue&label=Latest%20release&style=for-the-badge">
-    <img src="https://img.shields.io/github/last-commit/Thibor/jsRapAudio/?color=critical&style=for-the-badge">
+    <img src="https://img.shields.io/github/last-commit/Thibor/jsRapAudio?color=critical&style=for-the-badge">
 	<img src="https://img.shields.io/github/commits-since/Thibor/jsRapAudio/latest?style=for-the-badge">
 </div>
 
