@@ -16,3 +16,18 @@
 Try it out <a href="https://thibor.github.io/jsRapAudio/">here</a>.
 
 More information about this can be found in this blog <a href="https://www.jqueryscript.net/other/Music-Player-Audio-Visualizer-jsRapAudio.html">article</a>.
+
+### Settings
+
+Option | Type | Default | Description
+------ | ---- | ------- | -----------
+autoplay | bool | false | Play after start
+loop | bool | fale | Play in loop
+volume | integer | 1.0 | Audio volume (range 0.0 .. 1.0)
+
+### Events
+
+Event | Params | Description
+------ | ---- | -------
+onLoadedmetadata | none | Fired when an audio file is loaded
+onVolumechange | none | Fired when volume is changed

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30621.155
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "jsRapAudio", "..\Thibor\jsRapAudio\", "{609C52A8-869B-457E-BF34-35D961725ACA}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "jsRapAudio", ".", "{609C52A8-869B-457E-BF34-35D961725ACA}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_43072"
 		Debug.AspNetCompiler.PhysicalPath = "..\jsRapAudio\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_43072\"

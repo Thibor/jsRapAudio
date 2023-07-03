@@ -13,7 +13,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 				meterCount: 40,
 				meterGap: 2,
 				frequency: 0.7,
-				volume:0.5,
+				volume:1.0,
 				capColor: '#fff',
 				src: '',
 				onEnded: null,
