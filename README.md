@@ -22,6 +22,7 @@ More information about this can be found in this blog <a href="https://www.jquer
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
 autoplay | bool | false | Play after start
+controls | bool | true | Display standard audio controls
 loop | bool | fale | Play in loop
 volume | float | 1.0 | Audio volume (range 0.0 .. 1.0)
 
