@@ -30,4 +30,4 @@ volume | float | 1.0 | Audio volume (range 0.0 .. 1.0)
 Event | Params | Description
 ------ | ---- | -------
 onLoadedmetadata | none | Fired when an audio file is loaded
-onVolumechange | none | Fired when volume is changed
+onVolumechange | volume | Fired when volume is changed
